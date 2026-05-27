@@ -32,6 +32,10 @@ export default function ChatContainer({ conversation, onUpdateConversation }) {
     setStreamingContent('')
 
     try {
+      if (!window.puter) {
+        throw new Error('Puter.js is still loading. Please wait a moment and try again.')
+      }
+
       const history = conversation.messages.map(m => ({ role: m.role, content: m.content }))
       history.push({ role: 'user', content: text })
 
@@ -42,12 +46,20 @@ export default function ChatContainer({ conversation, onUpdateConversation }) {
         stream: true,
       })
 
-      for await (const chunk of response) {
-        const delta = chunk?.text || chunk?.delta?.text || chunk?.choices?.[0]?.delta?.content || ''
-        if (delta) {
-          fullResponse += delta
-          setStreamingContent(fullResponse)
+      if (response && typeof response === 'string') {
+        fullResponse = response
+      } else if (Symbol.asyncIterator && response[Symbol.asyncIterator]) {
+        for await (const chunk of response) {
+          const delta = chunk?.text || chunk?.delta?.text || chunk?.choices?.[0]?.delta?.content || ''
+          if (delta) {
+            fullResponse += delta
+            setStreamingContent(fullResponse)
+          }
         }
+      } else if (response?.message?.content) {
+        fullResponse = response.message.content
+      } else {
+        fullResponse = JSON.stringify(response)
       }
 
       const assistantMessage = {
