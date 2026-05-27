@@ -1,0 +1,95 @@
+.message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.user {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.userAvatar { background-color: #ff6b35; color: white; }
+.assistantAvatar { background-color: #4a90e2; color: white; }
+
+.bubble {
+  max-width: 72%;
+  border-radius: 16px;
+  padding: 14px 18px;
+  position: relative;
+  word-break: break-word;
+}
+
+.userBubble {
+  background-color: #ff6b35;
+  color: white;
+  border-bottom-right-radius: 4px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.assistantBubble {
+  background-color: #262626;
+  color: #e5e5e5;
+  border-bottom-left-radius: 4px;
+  padding-bottom: 32px;
+}
+
+.errorBubble {
+  border: 1px solid #e55a2b;
+  background-color: #2a1a14;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #ff6b35;
+  vertical-align: text-bottom;
+  animation: blink 0.8s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.copyBtn {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.copyBtn:hover { color: #b3b3b3; }
+
+@media (max-width: 600px) {
+  .bubble { max-width: 90%; }
+}
